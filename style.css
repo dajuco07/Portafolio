@@ -1,0 +1,267 @@
+/*VARIABLES GLOBALES*/
+
+/* Variables de colores para usar en todo el documento */
+:root {
+    --color-fondo: #f8f9fa;
+    --color-texto: #333333;
+    --color-principal: #0056b3;
+    --color-blanco: #ffffff;
+}
+
+/* Tamaño de letra base y comportamiento de deslizamiento suave */
+html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+}
+
+/*RESETEO Y MODELO DE CAJA*/
+
+/* Quita márgenes por defecto y hace que el ancho incluya el relleno (border-box) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*ESTRUCTURA PRINCIPAL*/
+
+/* Cabecera pegajosa (sticky) que se superpone al resto (z-index) */
+header {
+    background-color: var(--color-principal);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 0.5vh 0.6vh rgba(0,0,0,0.1);
+}
+
+/* Menú usando Flexbox para centrar y separar elementos */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 4vw;
+    padding: 2vh 0;
+}
+
+/* Enlaces sin subrayado y con transición suave al pasar el ratón */
+nav a {
+    color: var(--color-blanco);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffd700;
+}
+
+/* Secciones centradas automáticamente con un ancho máximo */
+section {
+    max-width: 90%;
+    margin: 5vh auto;
+    padding: 0 3vw;
+}
+
+/* Espaciado vertical de los títulos */
+h1, h2, h3 {
+    margin-top: 1.5vh;
+    margin-bottom: 2.5vh;
+    color: var(--color-principal);
+}
+
+/*4. TARJETAS Y BOTONES (ARTICLES)*/
+
+/* Diseño de tarjeta con fondo, bordes redondeados y sombra */
+article {
+    background-color: var(--color-blanco);
+    border-radius: 1vw;
+    padding: 4%;
+    margin-bottom: 5vh;
+    box-shadow: 0 0.5vh 1vh rgba(0,0,0,0.05);
+}
+
+/* Ajusta las imágenes al ancho disponible de su tarjeta */
+article > img {
+    max-width: 100%;
+    border-radius: 1vw;
+    margin: 2vh 0;
+}
+
+/* Botones en línea con animación de elevación al interactuar */
+.btn-proyecto {
+    display: inline-block;
+    background-color: var(--color-principal);
+    color: var(--color-blanco);
+    padding: 1.5vh 3vw;
+    text-decoration: none;
+    border-radius: 0.5vw;
+    margin-top: 2vh;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-proyecto:hover {
+    background-color: #003d82;
+    transform: translateY(-0.5vh);
+}
+
+/* Pie de página centrado */
+footer {
+    background-color: #222;
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 6vh 5vw;
+    margin-top: 8vh;
+}
+
+footer h2 {
+    color: var(--color-blanco);
+}
+
+footer a {
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+/*ARRUSEL CSS AVANZADO*/
+
+/* Contenedor principal: scroll horizontal con puntos de anclaje (snap) */
+.container-carrosel {
+    list-style: none;
+    height: 45vh;
+    margin: 3vh auto;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    anchor-name: --carrosel; /* Define este elemento como ancla */
+    scroll-snap-type: x mandatory;
+    scroll-marker-group: after; /* Agrupa los puntos indicadores debajo */
+}
+
+/* Elemento individual: evita encogerse y define el punto de encaje */
+.item-carrosel {
+    box-sizing: border-box;
+    height: 40vh;
+    width: 100%;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    margin: 0;
+    display: flex;
+}
+
+/* Mantiene la proporción de la imagen sin deformarla (object-fit) */
+.item-carrosel figure,
+.item-carrosel > img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: auto;
+}
+
+/* Oculta la barra de scroll nativa del navegador */
+.container-carrosel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Puntos indicadores generados dinámicamente */
+.item-carrosel::scroll-marker {
+    content: "";
+    width: 2vh;
+    height: 2vh;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Color del punto indicador cuando está activo */
+.item-carrosel::scroll-marker:target-current {
+    background-color: #333;
+}
+
+/* Botones laterales posicionados respecto al ancla (--carrosel) */
+.container-carrosel::scroll-button(right),
+.container-carrosel::scroll-button(left) {
+    background: #333;
+    color: ghostwhite;
+    font-weight: bolder;
+    font-size: 2rem;
+    border: none;
+    margin: 0 1vw;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    cursor: pointer;
+    position: fixed;
+    position-anchor: --carrosel;
+}
+
+/* Ubicación del botón derecho */
+.container-carrosel::scroll-button(right) {
+    content: '\2192';
+    position-area: right center;
+    translate: -10%;
+}
+
+/* Ubicación del botón izquierdo */
+.container-carrosel::scroll-button(left) {
+    content: '\2190';
+    position-area: left center;
+    translate: 10%;
+}
+
+/* Opacidad reducida cuando el botón llega al límite del scroll */
+.container-carrosel::scroll-button(right):disabled,
+.container-carrosel::scroll-button(left):disabled {
+    opacity: 0.2;
+    cursor: auto;
+}
+
+/*MEDIA QUERIES*/
+
+/* Adaptación para tablets (pantallas medianas) */
+@media (max-width: 768px) {
+    /* Apila el menú en vertical (columna) */
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 2vh;
+        padding: 1.5vh;
+    }
+
+    /* Reduce los márgenes laterales */
+    section {
+        margin: 3vh auto;
+        padding: 0 4vw;
+    }
+
+    /* Ajusta el tamaño del texto */
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+
+    /* Reduce el tamaño del carrusel y sus botones */
+    .container-carrosel { height: 35vh; }
+    .item-carrosel { height: 30vh; }
+
+    .container-carrosel::scroll-button(right),
+    .container-carrosel::scroll-button(left) {
+        width: 4vh;
+        height: 4vh;
+        font-size: 1.2rem;
+    }
+}
+
+/* Adaptación para móviles (pantallas pequeñas) */
+@media (max-width: 480px) {
+    /* Menos espacio interior en las tarjetas */
+    article {
+        padding: 4%;
+    }
+
+    /* Convierte el botón en bloque para ocupar todo el ancho */
+    .btn-proyecto {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
