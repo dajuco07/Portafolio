@@ -129,7 +129,7 @@ footer a {
 /* Contenedor principal: scroll horizontal con puntos de anclaje (snap) */
 .container-carrosel {
     list-style: none;
-    height: 45vh;
+    height: 72vh;
     margin: 3vh auto;
     display: flex;
     overflow-x: auto;
@@ -154,7 +154,6 @@ footer a {
 .item-carrosel figure,
 .item-carrosel > img {
     max-width: 100%;
-    height: 100%;
     object-fit: contain;
     margin: auto;
 }
@@ -162,21 +161,6 @@ footer a {
 /* Oculta la barra de scroll nativa del navegador */
 .container-carrosel::-webkit-scrollbar {
     display: none;
-}
-
-/* Puntos indicadores generados dinámicamente */
-.item-carrosel::scroll-marker {
-    content: "";
-    width: 2vh;
-    height: 2vh;
-    background-color: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-/* Color del punto indicador cuando está activo */
-.item-carrosel::scroll-marker:target-current {
-    background-color: #333;
 }
 
 /* Botones laterales posicionados respecto al ancla (--carrosel) */
@@ -187,7 +171,7 @@ footer a {
     font-weight: bolder;
     font-size: 2rem;
     border: none;
-    margin: 0 1vw;
+    margin: 0 10vw;
     width: 6vh;
     height: 6vh;
     border-radius: 50%;
@@ -200,14 +184,12 @@ footer a {
 .container-carrosel::scroll-button(right) {
     content: '\2192';
     position-area: right center;
-    translate: -10%;
 }
 
 /* Ubicación del botón izquierdo */
 .container-carrosel::scroll-button(left) {
     content: '\2190';
     position-area: left center;
-    translate: 10%;
 }
 
 /* Opacidad reducida cuando el botón llega al límite del scroll */
